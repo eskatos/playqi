@@ -17,11 +17,22 @@
  */
 package org.codeartisans.playqi;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import org.qi4j.api.Qi4j;
+import org.qi4j.api.composite.TransientBuilderFactory;
+import org.qi4j.api.injection.scope.Service;
+import org.qi4j.api.injection.scope.Structure;
+import org.qi4j.api.service.ServiceFinder;
+import org.qi4j.api.service.ServiceReference;
 import org.qi4j.api.structure.Application;
+import org.qi4j.api.structure.Layer;
+import org.qi4j.api.structure.Module;
+import org.qi4j.api.unitofwork.UnitOfWorkFactory;
 import org.qi4j.bootstrap.ApplicationAssembler;
 import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.Energy4Java;
+import org.qi4j.bootstrap.SingletonAssembler;
 import org.qi4j.spi.Qi4jSPI;
 
 public class PlayQiPlugin
@@ -61,15 +72,18 @@ public class PlayQiPlugin
     {
         super.onStart();
 
+        ClassLoader originalClassLoader = Thread.currentThread().getContextClassLoader();
+        Thread.currentThread().setContextClassLoader( play2app.classloader() );
+
         String appAssClassName = play2app.configuration().getString( CONFIG_APP_ASSEMBLER );
 
         try {
 
-            Class<ApplicationAssembler> appAssClass = ( Class<ApplicationAssembler> ) Class.forName( appAssClassName );
+            Class<ApplicationAssembler> appAssClass = ( Class<ApplicationAssembler> ) play2app.classloader().loadClass( appAssClassName );
             ApplicationAssembler appass = appAssClass.newInstance();
 
-            qi4j = new Energy4Java();
-            application = new Energy4Java().newApplication( appass );
+            qi4j = ( Energy4Java ) play2app.classloader().loadClass( Energy4Java.class.getName() ).newInstance();
+            application = qi4j.newApplication( appass );
             application.activate();
 
             play.Logger.debug( "Qi4jPlugin started!" );
@@ -86,6 +100,8 @@ public class PlayQiPlugin
             throw new PlayQiException( "Unable to assemble Qi4j Application: " + ex.getMessage(), ex );
         } catch ( Exception ex ) {
             throw new PlayQiException( "Unable to activate Qi4j Application: " + ex.getMessage(), ex );
+        } finally {
+            Thread.currentThread().setContextClassLoader( originalClassLoader );
         }
     }
 

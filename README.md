@@ -1,7 +1,7 @@
-# Play! 2 Qi4j Plugin
+# PlayQi - a Play! 2 Qi4j Plugin
 
-This plugin ties a Qi4j Application to a Play! 2 Application providing tight
-integration.
+This plugin ties a Qi4j Application to a Play! 2 Application providing a tight
+integration between the two.
 
 ## What is Play!?
 
@@ -58,6 +58,10 @@ Programming fits or go for a bigger DDD stack using Qi4j
 [Libraries](http://qi4j.org/libraries.html) and
 [Extensions](http://qi4j.org/extensions.html). In development mode the Qi4j
 [Tools](http://qi4j.org/tools.html) can come in handy.
+
+## How is "PlayQi" pronounced?
+
+Qi4j is pronounced "chee for jay", so PlayQi is pronouced "play chee".
 
 ## Installation
 
