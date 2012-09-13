@@ -61,11 +61,9 @@ Programming fits or go for a bigger DDD stack using Qi4j
 
 ## Installation
 
-* clone and install the plugin locally
-* add ````"org.codeartisans" %% "playqi" % "1.0-SNAPSHOT"```` to your
-  dependencies in ````project/Build.scala````
-* add ````1500:org.codeartisans.playqi.PlayQiPlugin```` to your 
-  ````conf/play.plugins````
+* Add ````https://oss.sonatype.org/content/repositories/snapshots/```` and ````https://repository-qi4j.forge.cloudbees.com/snapshot/```` repositories as resolvers to your ````project/Build.scala```` ;
+* add ````"org.codeartisans" %% "playqi" % "1.0-SNAPSHOT"```` and ````"org.qi4j.core" %% "org.qi4j.core.runtime" % "2.0-SNAPSHOT"```` to your dependencies in ````project/Build.scala```` ;
+* add ````1500:org.codeartisans.playqi.PlayQiPlugin```` to your  ````conf/play.plugins````.
 
 ## Configuration
 
