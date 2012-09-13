@@ -62,21 +62,21 @@ Programming fits or go for a bigger DDD stack using Qi4j
 ## Installation
 
 * clone and install the plugin locally
-* add ```"org.codeartisans" %% "playqi" % "1.0-SNAPSHOT"``` to your
-  dependencies in ```project/Build.scala```
-* add ```1500:org.codeartisans.playqi.PlayQiPlugin``` to your 
-  ```conf/play.plugins```
+* add ````"org.codeartisans" %% "playqi" % "1.0-SNAPSHOT"```` to your
+  dependencies in ````project/Build.scala````
+* add ````1500:org.codeartisans.playqi.PlayQiPlugin```` to your 
+  ````conf/play.plugins````
 
 ## Configuration
 
 The plugin request that you set the ````qi4j.app-assembler```` parameter in
-```conf/application.conf```. 
+````conf/application.conf````. 
 
 A Qi4j application is assembled using an __ApplicationAssembler__, set
 ````qi4j.app-assembler```` to the fully qualified name of yours class.
 
 As a quick start and for a simple Qi4j application you can extend
-````SingletonAssembler```` ;
+SingletonAssembler ;
 
     public class MyAppAssembler extends SingletonAssembler {
       public void assemble(ModuleAssembly ma) throws AssemblyException {
