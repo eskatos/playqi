@@ -77,7 +77,7 @@ SingletonAssembler ;
 
     public class MyAppAssembler extends SingletonAssembler {
       public void assemble(ModuleAssembly ma) throws AssemblyException {
-        ma.values(   Comment.class, Tagline.class );
+        ma.values( Comment.class, Tagline.class );
         ma.entities( Post.class, Page.class );
         ma.services( Blog.class
                      MemoryEntityStoreService.class, 
