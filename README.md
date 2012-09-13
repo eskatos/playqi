@@ -77,10 +77,10 @@ SingletonAssembler ;
 
     public class MyAppAssembler extends SingletonAssembler {
       public void assemble(ModuleAssembly ma) throws AssemblyException {
-        ma.objects( .class) ;
-        ma.values( Comment.class, Tagline.class );
+        ma.values(   Comment.class, Tagline.class );
         ma.entities( Post.class, Page.class );
-        ma.services( MemoryEntityStoreService.class, 
+        ma.services( Blog.class
+                     MemoryEntityStoreService.class, 
                      UuidIdentityGeneratorService.class );
       }
     }
