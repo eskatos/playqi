@@ -69,8 +69,7 @@ Programming fits or go for a bigger DDD stack using Qi4j
 
 ## Configuration
 
-The plugin request that you set the ````qi4j.app-assembler```` parameter in
- ````conf/application.conf````. 
+The plugin request that you set the ````qi4j.app-assembler```` parameter in ````conf/application.conf````. 
 
 A Qi4j application is assembled using an __ApplicationAssembler__, set
 ````qi4j.app-assembler```` to the fully qualified name of yours class.
