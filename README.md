@@ -184,13 +184,15 @@ column separated list of package names.
 __Limitations__: @Tagged services are not supported yet.
 
 
-### Qi4j Tools
+### Qi4j Development Tools
+
+Theses tools work in DEV mode only. Their configuration is ignored in TEST and PROD modes.
 
 #### Envisage
 
 By setting ````qi4j.envisable=enabled```` in your ````application.conf````
 the [Envisage Qi4j Tool](http://qi4j.org/tools-envisage.html)
-is started/reloaded/stopped alongside your application in DEV mode.
+is started/reloaded/stopped alongside your application.
 
 ![](http://qi4j.org/images/tools-envisage-type.png "Type View")
 
@@ -204,7 +206,7 @@ it allows you to browse your Application Assembly. Visualizations can be printed
 
 By setting ````qi4j.entity-viewer=enabled```` in your ````application.conf````
 the [Entity Viewer Qi4j Tool](http://qi4j.org/images/tools-envisage-stacked.png)
-is started/reloaded/stopped alongside your application in DEV mode.
+is started/reloaded/stopped alongside your application.
 
 ![](http://qi4j.org/images/tools-entity-viewer.png "EntityViewer")
 
