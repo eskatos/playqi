@@ -25,7 +25,7 @@
         </repository>
         <repository>
             <id>qi4j</id>
-            <url>repository.ops4j.org/maven2/</url>
+            <url>http://repository.ops4j.org/maven2/</url>
         </repository>
         <repository>
             <id>qi4j-snapshots</id>
@@ -54,6 +54,16 @@
         <dependency>
             <groupId>org.qi4j.core</groupId>
             <artifactId>org.qi4j.core.bootstrap</artifactId>
+            <version>${version.qi4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.qi4j.tool</groupId>
+            <artifactId>org.qi4j.tool.envisage</artifactId>
+            <version>${version.qi4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.qi4j.tool</groupId>
+            <artifactId>org.qi4j.tool.entity-viewer</artifactId>
             <version>${version.qi4j}</version>
         </dependency>
 

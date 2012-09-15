@@ -22,7 +22,7 @@ import org.qi4j.api.structure.Application;
 import org.qi4j.api.structure.Layer;
 import org.qi4j.api.structure.Module;
 
-public final class PlayQiSingle
+public class PlayQiSingle
 {
 
     public static final String LAYER = "Layer 1";
@@ -76,7 +76,7 @@ public final class PlayQiSingle
         return module().findService( serviceType ).get();
     }
 
-    private PlayQiSingle()
+    protected PlayQiSingle()
     {
     }
 

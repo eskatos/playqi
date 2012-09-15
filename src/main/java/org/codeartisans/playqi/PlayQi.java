@@ -22,7 +22,7 @@ import org.qi4j.api.structure.Application;
 import org.qi4j.api.structure.Layer;
 import org.qi4j.api.structure.Module;
 
-public final class PlayQi
+public class PlayQi
 {
 
     /**
@@ -79,7 +79,7 @@ public final class PlayQi
         return module( layerName, moduleName ).findService( serviceType ).get();
     }
 
-    private PlayQi()
+    protected PlayQi()
     {
     }
 

@@ -3,7 +3,10 @@
 This plugin ties a Qi4j Application to a Play! 2 Application providing a tight
 integration between the two.
 
+
 ## What is Play!?
+
+![](http://www.playframework.org/assets/images/logo.png "Play!")
 
 > The Play framework makes it easier to build web applications with Java &
 > Scala.
@@ -24,7 +27,10 @@ Discussion
 [http://groups.google.com/group/play-framework]
 (http://groups.google.com/group/play-framework)
 
+
 ## What is Qi4j?
+
+![](http://qi4j.org/images/logo-standard.png "Qi4j")
 
 > The short answer is that Qi4j is a framework for domain centric application
 > development, including evolved concepts from AOP, DI and DDD.
@@ -59,25 +65,29 @@ Programming fits or go for a bigger DDD stack using Qi4j
 [Extensions](http://qi4j.org/extensions.html). In development mode the Qi4j
 [Tools](http://qi4j.org/tools.html) can come in handy.
 
+
 ## How is "PlayQi" pronounced?
 
 Qi4j is pronounced "chee for jay", so PlayQi is pronouced "play chee".
 
-## Installation
+
+## Usage
+
+
+### Installation
 
 * Add ````https://oss.sonatype.org/content/repositories/snapshots/```` and ````https://repository-qi4j.forge.cloudbees.com/snapshot/```` repositories as resolvers to your ````project/Build.scala```` ;
 * add ````"org.codeartisans" %% "playqi" % "1.0-SNAPSHOT"```` and ````"org.qi4j.core" %% "org.qi4j.core.runtime" % "2.0-SNAPSHOT"```` to your dependencies in ````project/Build.scala```` ;
 * add ````1500:org.codeartisans.playqi.PlayQiPlugin```` to your  ````conf/play.plugins````.
 
-## Configuration
+
+### Application Assembly
 
 The plugin request that you set the ````qi4j.app-assembler```` parameter in ````conf/application.conf````. 
 
-A Qi4j application is assembled using an __ApplicationAssembler__, set
-````qi4j.app-assembler```` to the fully qualified name of yours class.
+A Qi4j application is assembled using an __ApplicationAssembler__, set ````qi4j.app-assembler```` to the fully qualified name of yours class.
 
-As a quick start and for a simple Qi4j application you can extend
-SingletonAssembler ;
+As a quick start and for a simple Qi4j application you can extend SingletonAssembler ;
 
     public class MyAppAssembler extends SingletonAssembler {
       public void assemble(ModuleAssembly ma) throws AssemblyException {
@@ -94,12 +104,17 @@ and use ````qi4j.app-assembler=bootstrap.MyAppAssembler````.
 See this tutorial on [how to assemble a more complete Qi4j application]
 (http://qi4j.org/howto-assemble-application.html).
 
+
 ## Integrations
 
-### Lifecycle
+
+### Application Lifecycle and Modes
 
 Play and Qi4j Applications are __started__ / __activated__ and __passivated__
-/ __stopped__ together
+/ __stopped__ together.
+
+Moreover, Play __DEV__ / __TEST__ / __PROD__ modes and Qi4j __development__ / __test__ / __production__ modes are synched.
+
 
 ### Compose Play Actions with Qi4j UnitOfWorks
 
@@ -113,7 +128,11 @@ UnitsOfWork around Play Actions.
       return ok( .. );
     }
 
+
 ### Plugin API
+
+This plugin provides the ````PlayQi```` and ````PlayQiSingle```` utility classes that
+exposes facility methods:
 
     // For a simple Qi4j application based on SingletonAssembler:
     Application app = PlayQiSingle.application();
@@ -135,6 +154,65 @@ Here is a simple exemple using a SingletonAssembler:
         return ok( template.render( service( Blog.class ).homepage() ) );
       }
     }
+
+
+### Controllers injection
+
+Qi4j Structure and Service injections scopes are supported in controllers.
+
+To use this facility you must set both ````qi4j.inject-layer```` and ````qi4j.inject-module````
+parameters in your ````application.conf```` to define the Module from where the injections
+will be done ;
+
+    qi4j.inject-layer=Presentation
+    qi4j.inject-module=Contexts
+
+and then in your controllers:
+
+    @Structure public static Application application;
+    @Structure public static Layer layer;
+    @Structure public static Module module;
+
+    @Service public static Iterable<ServiceReference<Blog>> blogReferences;
+    @Service public static ServiceReference<Blog> blogReference;
+    @Service public static Blog blogService;
+
+By default, only classes in the ````controllers```` package are injection candidates.
+You can set the ````qi4j.inject-packages```` parameter to change this behaviour with a
+column separated list of package names.
+
+__Limitations__: @Tagged services are not supported yet.
+
+
+### Qi4j Tools
+
+#### Envisage
+
+By setting ````qi4j.envisable=enabled```` in your ````application.conf````
+the [Envisage Qi4j Tool](http://qi4j.org/tools-envisage.html)
+is started/reloaded/stopped alongside your application in DEV mode.
+
+![](http://qi4j.org/images/tools-envisage-type.png "Type View")
+
+![](http://qi4j.org/images/tools-envisage-stacked.png "Stacked View")
+
+Envisage is a Swing based visualization tool for the Qi4j Application model,
+it allows you to browse your Application Assembly. Visualizations can be printed to PDFs.
+
+
+#### EntityViewer
+
+By setting ````qi4j.entity-viewer=enabled```` in your ````application.conf````
+the [Entity Viewer Qi4j Tool](http://qi4j.org/images/tools-envisage-stacked.png)
+is started/reloaded/stopped alongside your application in DEV mode.
+
+![](http://qi4j.org/images/tools-entity-viewer.png "EntityViewer")
+
+EntityViewer is a Swing based Entities browser. It allows you to browse Entities
+persisted in EntityStores.
+
+Note that to use the EntityViewer your Qi4j Application Assembly must contains both
+EntityStore and Index/Query services.
 
 
 ## Licence
