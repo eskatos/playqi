@@ -255,7 +255,9 @@ public class PlayQiPlugin
             entityViewerInstance.stop();
         }
         try {
-            application.passivate();
+            if ( application != null ) {
+                application.passivate();
+            }
         } catch ( Exception ex ) {
             play.Logger.warn( "An exception occured during Qi4j Application passivation: " + ex.getMessage(), ex );
         } finally {
