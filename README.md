@@ -143,8 +143,8 @@ exposes facility methods:
     // For a Qi4j application using layers and modules:
     Application app = PlayQi.application();
     Layer layer = PlayQi.layer( "Presentation" );
-    Module module = PlayQi.module( "Presentation", "Contexts );
-    Blog blog = PlayQi.service( "Presentation", "Contexts, Blog.class );
+    Module module = PlayQi.module( "Presentation", "Contexts" );
+    Blog blog = PlayQi.service( "Presentation", "Contexts", Blog.class );
 
 Here is a simple exemple using a SingletonAssembler:
 
