@@ -22,6 +22,9 @@ import org.qi4j.api.structure.Application;
 import org.qi4j.api.structure.Layer;
 import org.qi4j.api.structure.Module;
 
+/**
+ * PlayQi API for a Qi4j Application using a custom Assembler.
+ */
 public class PlayQi
 {
 
@@ -60,6 +63,21 @@ public class PlayQi
      * @param layerName the name of the Layer
      * @param moduleName the name of the Module
      * @param serviceType the type that the Service must implement
+     * @return all the ServiceReferences matching the given Service type
+     */
+    public static <T> Iterable<ServiceReference<T>> servicesReferences( String layerName, String moduleName, Class<T> serviceType )
+    {
+        return module( layerName, moduleName ).findServices( serviceType );
+    }
+
+    /**
+     * From a ServiceReference you can access and modify metadata about a service.
+     * You can also access the actual service through get(), that can then be invoked.
+     *
+     * @param <T> the type that the Service must implement
+     * @param layerName the name of the Layer
+     * @param moduleName the name of the Module
+     * @param serviceType the type that the Service must implement
      * @return the ServiceReference
      */
     public static <T> ServiceReference<T> serviceReference( String layerName, String moduleName, Class<T> serviceType )
@@ -72,11 +90,63 @@ public class PlayQi
      * @param layerName the name of the Layer
      * @param moduleName the name of the Module
      * @param serviceType the type that the Service must implement
-     * @return the service instance
+     * @return the Service instance
      */
     public static <T> T service( String layerName, String moduleName, Class<T> serviceType )
     {
         return module( layerName, moduleName ).findService( serviceType ).get();
+    }
+
+    /**
+     * @return the layer configured as qi4j.controllers-layer
+     */
+    public static Layer controllersLayer()
+    {
+        return play.Play.application().plugin( PlayQiPlugin.class ).controllersLayer();
+    }
+
+    /**
+     * @return the module configured as qi4j.controllers-module
+     */
+    public static Module controllersModule()
+    {
+        return play.Play.application().plugin( PlayQiPlugin.class ).controllersModule();
+    }
+
+    /**
+     * Find a ServiceReference in the module configured as qi4j.inject.module.
+     *
+     * @param <T> the type that the Service must implement
+     * @param serviceType the type that the Service must implement
+     * @return all the ServiceReferences matching the given Service type
+     */
+    public static <T> Iterable<ServiceReference<T>> servicesReferences( Class<T> serviceType )
+    {
+        return controllersModule().findServices( serviceType );
+    }
+
+    /**
+     * Find a ServiceReference in the module configured as qi4j.inject.module.
+     *
+     * @param <T> the type that the Service must implement
+     * @param serviceType the type that the Service must implement
+     * @return the ServiceReference
+     */
+    public static <T> ServiceReference<T> serviceReference( Class<T> serviceType )
+    {
+        return controllersModule().findService( serviceType );
+    }
+
+    /**
+     * Find a Service instance in the module configured as qi4j.inject.module.
+     *
+     * @param <T> the type that the Service must implement
+     * @param serviceType the type that the Service must implement
+     * @return the Service instance
+     */
+    public static <T> T service( Class<T> serviceType )
+    {
+        return controllersModule().findService( serviceType ).get();
     }
 
     protected PlayQi()

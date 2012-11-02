@@ -22,11 +22,13 @@ import org.qi4j.api.structure.Application;
 import org.qi4j.api.structure.Layer;
 import org.qi4j.api.structure.Module;
 
+/**
+ * PlayQi API for a Qi4j Application assembled using SingletonAssembler.
+ */
 public class PlayQiSingle
 {
 
     public static final String LAYER = "Layer 1";
-
     public static final String MODULE = "Module 1";
 
     /**
@@ -59,6 +61,19 @@ public class PlayQiSingle
      *
      * @param <T> the type that the Service must implement
      * @param serviceType the type that the Service must implement
+     * @return all the ServiceReferences matching the given Service type
+     */
+    public static <T> Iterable<ServiceReference<T>> servicesReferences( Class<T> servicetype )
+    {
+        return module().findServices( servicetype );
+    }
+
+    /**
+     * From a ServiceReference you can access and modify metadata about a service.
+     * You can also access the actual service through get(), that can then be invoked.
+     *
+     * @param <T> the type that the Service must implement
+     * @param serviceType the type that the Service must implement
      * @return the ServiceReference
      */
     public static <T> ServiceReference<T> serviceReference( Class<T> serviceType )
@@ -74,6 +89,16 @@ public class PlayQiSingle
     public static <T> T service( Class<T> serviceType )
     {
         return module().findService( serviceType ).get();
+    }
+
+    public static <T> T newControllerInstance( Class<T> controllerType )
+    {
+        return module().newObject( controllerType );
+    }
+
+    public static <T> T newTransientControllerInstance( Class<T> controllerType )
+    {
+        return module().newTransient( controllerType );
     }
 
     protected PlayQiSingle()

@@ -3,7 +3,6 @@
 This plugin ties a Qi4j Application to a Play! 2 Application providing a tight
 integration between the two.
 
-
 ## What is Play!?
 
 ![](http://www.playframework.org/assets/images/logo.png "Play!")
@@ -56,7 +55,7 @@ Discussion
 [http://qi4j.org/help.html](http://qi4j.org/help.html)
 
 As Qi4j itself is written in the Java language, this Play plugin is too.
-Sample code you'll find below is __Java__ code but all this works in Play
+Sample code you'll find below is __Java__ code but most of this works in Play
 __Scala__ applications.
 
 You can use Qi4j for a small part of your application where Composite Oriented
@@ -73,12 +72,13 @@ Qi4j is pronounced "chee for jay", so PlayQi is pronouced "play chee".
 
 ## Usage
 
-
 ### Installation
 
 * Add ````https://oss.sonatype.org/content/repositories/snapshots/```` and ````https://repository-qi4j.forge.cloudbees.com/snapshot/```` repositories as resolvers to your ````project/Build.scala```` ;
 * add ````"org.codeartisans" %% "playqi" % "1.0-SNAPSHOT"```` and ````"org.qi4j.core" %% "org.qi4j.core.runtime" % "2.0-SNAPSHOT"```` to your dependencies in ````project/Build.scala```` ;
 * add ````1500:org.codeartisans.playqi.PlayQiPlugin```` to your  ````conf/play.plugins````.
+
+This plugin works with SNAPSHOTs of the upcoming 2.0 Qi4j release and so is a SNAPSHOT too.
 
 
 ### Application Assembly
@@ -105,7 +105,7 @@ See this tutorial on [how to assemble a more complete Qi4j application]
 (http://qi4j.org/howto-assemble-application.html).
 
 
-## Integrations
+## Integrations and usage
 
 
 ### Application Lifecycle and Modes
@@ -116,56 +116,60 @@ Play and Qi4j Applications are __started__ / __activated__ and __passivated__
 Moreover, Play __DEV__ / __TEST__ / __PROD__ modes and Qi4j __development__ / __test__ / __production__ modes are synched.
 
 
-### Compose Play Actions with Qi4j UnitOfWorks
-
-This plugin provides the ````@UnitOfWorkActionConcern```` annotation to wrap Qi4j
-UnitsOfWork around Play Actions.
-
-    import static org.codeartisans.playqi.PlayQiSingle.*;
-    @UnitOfWorkActionConcern( LAYER, MODULE )
-    public static Result action() {
-      :
-      return ok( .. );
-    }
-
-
 ### Plugin API
 
-This plugin provides the ````PlayQi```` and ````PlayQiSingle```` utility classes that
-exposes facility methods:
+Depending on your Qi4j Application assembly you can use two APIs:
 
-    // For a simple Qi4j application based on SingletonAssembler:
+- ````PlayQiSingle```` for a simple Qi4j Application based on SingletonAssembler ;
+- ````PlayQi```` for a Qi4j Application using layers and modules.
+
+````PlayQiSingle```` is provided as an easy way to prototype or to integrate a small Qi4j application in a Play application. We recommend to use a true application assembly using layers and modules and the ````PlayQi```` API.
+
+**PlayQiSingle**
+
+When using a SingletonAssembler the single Module of the Qi4j Application is considered as the Module used by Play controllers, thus you don't need to set ````qi4j.controllers-layer```` nor ````qi4j.controllers-module```` in your configuration.
+
     Application app = PlayQiSingle.application();
     Layer layer = PlayQiSingle.layer();
     Module module = PlayQiSingle.module();
     Blog blog = PlayQiSingle.service( Blog.class );
 
-    // For a Qi4j application using layers and modules:
+Here is a simple exemple:
+
+    public class BlogController extends Controller {
+      public static Result index() {
+        return ok( template.render( PlayQiSingle.service( Blog.class ).homepage() ) );
+      }
+    }
+
+**PlayQi**
+
+When using a complete Qi4j Application assembly you need to set ````qi4j.controllers-layer```` and ````qi4j.controllers-module```` in your configuration to point the Module of your Qi4j Application the Play controllers will use. Once done, ````PlayQi```` provide utility methods to quickly get handles on Qi4j composites:
+
     Application app = PlayQi.application();
+    Layer controllersLayer = PlayQi.controllersLayer();
+    Module controllersModule = PlayQi.controllersModule();
+    Blog blog = PlayQi.service( Blog.class ); // From the controllers module
+
+Besides, you can also get a handle on any layer/modules of your Qi4j Application:
+
     Layer layer = PlayQi.layer( "Presentation" );
     Module module = PlayQi.module( "Presentation", "Contexts" );
     Blog blog = PlayQi.service( "Presentation", "Contexts", Blog.class );
-
-Here is a simple exemple using a SingletonAssembler:
-
-    import static org.codeartisans.playqi.PlayQiSingle.*;
-    public class BlogController extends Controller {
-      public static Result index() {
-        return ok( template.render( service( Blog.class ).homepage() ) );
-      }
-    }
 
 
 ### Controllers injection
 
 Qi4j Structure and Service injections scopes are supported in controllers.
 
-To use this facility you must set both ````qi4j.inject-layer```` and ````qi4j.inject-module````
+> **WARNING** Controllers injection only work on Play! 2 **Java** Applications for now, we need help from Scala developers to implement this in **Scala**, any volunteers?
+
+To use this facility you must set both ````qi4j.controllers-layer```` and ````qi4j.controllers-module````
 parameters in your ````application.conf```` to define the Module from where the injections
 will be done ;
 
-    qi4j.inject-layer=Presentation
-    qi4j.inject-module=Contexts
+    qi4j.controllers-layer=Presentation
+    qi4j.controllers-module=Contexts
 
 and then in your controllers:
 
@@ -178,10 +182,126 @@ and then in your controllers:
     @Service public static Blog blogService;
 
 By default, only classes in the ````controllers```` package are injection candidates.
-You can set the ````qi4j.inject-packages```` parameter to change this behaviour with a
+You can set the ````qi4j.controllers-packages```` parameter to change this behaviour with a
 column separated list of package names.
 
 __Limitations__: @Tagged services are not supported yet.
+
+### Qi4j Controllers
+
+Play 2.1 will bring the possibility to use non-static Java controllers. This plugin allow
+you to manage your controllers inside your Qi4j application.
+
+This is available using ````PlayQiSingle```` and ````PlayQi````, see above.
+
+**Object Controllers**
+
+Let's start with a simple controller ;
+
+    public class MyController extends Controller {
+
+      @Service Blog blog;
+
+      public Result index() {
+        return ok( index.render( blog.homepage() ) );
+      }
+
+    }
+
+assemble it in your Qi4j application as an Object;
+
+    moduleAssembly.objects( MyController.class );
+
+and then use the PlayQi API in your GlobalSettings ;
+
+    public class Global extends GlobalSettings {
+
+      @Override
+      public <T> T getControllerInstance( Class<T> clazz ) {
+        return PlayQi.newControllerInstance( clazz );
+      }
+
+    }
+
+
+**Transient Composite Controllers**
+
+Here is a sample Controller as a TransientComposite (meaning you get Qi4j fragments support):
+
+    public interface MyController {
+
+      @MyConcern
+      @MySideEffect
+      Result index();
+
+    }
+    public class MyControllerMixin {
+
+      @Service Blog blog;
+
+      @Override
+      public Result index() {
+        return ok( index.render( blog.homepage() );
+      }
+    }
+
+assemble it in your Qi4j application as an Object;
+
+    moduleAssembly.transients( MyController.class ).withMixins( MyControllerMixin.class );
+
+and then use the PlayQi API in your GlobalSettings ;
+
+    public class Global extends GlobalSettings {
+
+      @Override
+      public <T> T getControllerInstance( Class<T> clazz ) {
+        return PlayQi.newTransientControllerInstance( clazz );
+      }
+
+    }
+
+### Compose Play Actions with Qi4j UnitOfWorks
+
+This plugin provides the annotations and to wrap Qi4j UnitsOfWork around Play Actions and Callable<?> wrappers for you to go async.
+
+A Qi4j UnitOfWork takes place in a Module, so depending on your Application assembly you may use different Action composition annotations or Callable<?> wrappers.
+
+**When using SingletonAssembler**
+
+    import org.codeartisans.playqi.*;
+    public class MyController {
+
+      @PlayQiSingleUnitOfWorkConcern
+      public static Result action() {
+        :
+        return ok( .. );
+      }
+
+    }
+
+If you go async, you can use the ````PlayQiSingleUnitOfWorkCallable```` to wrap a UoW around another Callable.
+
+**When using a full Qi4j Application assembly**
+
+    import org.codeartisans.playqi.*;
+    public class MyController {
+
+      // UoW taking place in the configured controllers module
+      @ControllersModuleUnitOfWorkConcern
+      public static Result action() {
+        :
+        return ok( .. );
+      }
+
+      // UoW taking place in a module of your choice
+      @PlayQiUnitOfWorkConcern( "Presentation", "Contexts" )
+      public static Result anotherAction() {
+        :
+        return ok( .. );
+      }
+    }
+
+If you go async, you can use either the ````ControllersModuleUnitOfWorkCallable```` or the ````PlayQiUnitOfWorkCallable```` to wrap a UoW around another Callable.
 
 
 ### Qi4j Development Tools

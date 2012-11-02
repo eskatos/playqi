@@ -40,17 +40,12 @@
     </repositories>
 
     <properties>
-        <version.play2>2.0.3</version.play2>
+        <version.play2>2.0.4</version.play2>
         <version.qi4j>2.0-SNAPSHOT</version.qi4j>
     </properties>
 
     <dependencies>
 
-        <dependency>
-            <groupId>org.qi4j.core</groupId>
-            <artifactId>org.qi4j.core.api</artifactId>
-            <version>${version.qi4j}</version>
-        </dependency>
         <dependency>
             <groupId>org.qi4j.core</groupId>
             <artifactId>org.qi4j.core.bootstrap</artifactId>

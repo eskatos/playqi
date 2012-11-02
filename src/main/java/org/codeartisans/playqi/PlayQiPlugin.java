@@ -46,27 +46,16 @@ public class PlayQiPlugin
 {
 
     private static final String ENABLED = "enabled";
-
     private static final String CONFIG_APP_ASSEMBLER = "qi4j.app-assembler";
-
     private static final String CONFIG_ENVISAGE = "qi4j.envisage";
-
     private static final String CONFIG_ENTITY_VIEWER = "qi4j.entity-viewer";
-
-    private static final String CONFIG_INJECT_LAYER = "qi4j.inject.layer";
-
-    private static final String CONFIG_INJECT_MODULE = "qi4j.inject.module";
-
-    private static final String CONFIG_INJECT_PACKAGES = "qi4j.inject.packages";
-
+    private static final String CONFIG_CONTROLLERS_LAYER = "qi4j.controllers-layer";
+    private static final String CONFIG_CONTROLLERS_MODULE = "qi4j.controllers-module";
+    private static final String CONFIG_CONTROLLERS_PACKAGES = "qi4j.controllers-packages";
     private final play.Application play2app;
-
     private Qi4jRuntime qi4j;
-
     private Application application;
-
     private Envisage envisageInstance;
-
     private EntityViewer entityViewerInstance;
 
     public PlayQiPlugin( play.Application play2app )
@@ -89,6 +78,21 @@ public class PlayQiPlugin
         return qi4j.spi();
     }
 
+    public Layer controllersLayer()
+    {
+        play.Configuration configuration = play2app.configuration();
+        String controllersLayerName = configuration.getString( CONFIG_CONTROLLERS_LAYER );
+        return application.findLayer( controllersLayerName );
+    }
+
+    public Module controllersModule()
+    {
+        play.Configuration configuration = play2app.configuration();
+        String controllersLayerName = configuration.getString( CONFIG_CONTROLLERS_LAYER );
+        String controllersModuleName = configuration.getString( CONFIG_CONTROLLERS_MODULE );
+        return application.findModule( controllersLayerName, controllersModuleName );
+    }
+
     @Override
     public void onStart()
     {
@@ -104,32 +108,36 @@ public class PlayQiPlugin
         String appAssClassName = configuration.getString( CONFIG_APP_ASSEMBLER );
         boolean envisage = ENABLED.equals( configuration.getString( CONFIG_ENVISAGE ) );
         boolean entityViewer = ENABLED.equals( configuration.getString( CONFIG_ENTITY_VIEWER ) );
-        String injectLayer = configuration.getString( CONFIG_INJECT_LAYER );
-        String injectModule = configuration.getString( CONFIG_INJECT_MODULE );
-        String injectPackages = configuration.getString( CONFIG_INJECT_PACKAGES );
-        injectPackages = injectPackages == null ? "controllers" : injectPackages;
+        String controllersLayerName = configuration.getString( CONFIG_CONTROLLERS_LAYER );
+        String controllersModuleName = configuration.getString( CONFIG_CONTROLLERS_MODULE );
+        String controllersPackages = configuration.getString( CONFIG_CONTROLLERS_PACKAGES );
+        controllersPackages = controllersPackages == null ? "controllers" : controllersPackages;
 
         Mode mode = play2app.isProd() ? Mode.production : play2app.isDev() ? Mode.development : Mode.test;
 
-        try {
+        try
+        {
 
             Class<ApplicationAssembler> appAssClass = ( Class<ApplicationAssembler> ) classloader.loadClass( appAssClassName );
             ApplicationAssembler assembler = appAssClass.newInstance();
 
-            if ( assembler instanceof SingletonAssembler ) {
-                injectLayer = PlayQiSingle.LAYER;
-                injectModule = PlayQiSingle.MODULE;
+            if( assembler instanceof SingletonAssembler )
+            {
+                controllersLayerName = PlayQiSingle.LAYER;
+                controllersModuleName = PlayQiSingle.MODULE;
             }
 
             RuntimeFactory runtimeFactory = ( RuntimeFactory ) classloader.loadClass(
                     RuntimeFactory.StandaloneApplicationRuntimeFactory.class.getName() ).newInstance();
             qi4j = runtimeFactory.createRuntime();
-            if ( qi4j == null ) {
+            if( qi4j == null )
+            {
                 throw new PlayQiException( "Can not create Qi4j without a Qi4j Runtime." );
             }
 
             ApplicationAssembly assembly = assembler.assemble( qi4j.applicationAssemblyFactory() );
-            if ( assembly == null ) {
+            if( assembly == null )
+            {
                 throw new PlayQiException( "Application assembler did not return any ApplicationAssembly" );
             }
 
@@ -141,98 +149,135 @@ public class PlayQiPlugin
             application.activate();
 
             // Development tools
-            if ( mode == Mode.development ) {
-                if ( envisage ) {
+            if( mode == Mode.development )
+            {
+                if( envisage )
+                {
                     envisageInstance = ( Envisage ) classloader.loadClass( Envisage.class.getName() ).newInstance();
                     envisageInstance.run( model );
                 }
-                if ( entityViewer ) {
+                if( entityViewer )
+                {
                     entityViewerInstance = ( EntityViewer ) classloader.loadClass( EntityViewer.class.getName() ).newInstance();
                     entityViewerInstance.show( qi4j.spi(), model, application );
                 }
             }
 
-            if ( injectLayer != null && injectModule != null ) {
-                for ( String pkg : injectPackages.split( ":" ) ) {
+            if( controllersLayerName != null && controllersModuleName != null )
+            {
+                for( String pkg : controllersPackages.split( ":" ) )
+                {
                     Class[] classes = Helper.getClasses( pkg, classloader );
-                    for ( Class clazz : classes ) {
-                        eventuallyInjectStatic( clazz, injectLayer, injectModule );
+                    for( Class clazz : classes )
+                    {
+                        eventuallyInjectStatic( clazz, controllersLayerName, controllersModuleName );
                     }
                 }
             }
 
             play.Logger.debug( "Qi4jPlugin started!" );
 
-        } catch ( ClassNotFoundException ex ) {
+        }
+        catch( ClassNotFoundException ex )
+        {
             throw new PlayQiException( "Unable to find Qi4j ApplicationAssembler: " + ex.getMessage(), ex );
-        } catch ( ClassCastException ex ) {
+        }
+        catch( ClassCastException ex )
+        {
             throw new PlayQiException( appAssClassName + " is not a Qi4j ApplicationAssembler: " + ex.getMessage(), ex );
-        } catch ( InstantiationException ex ) {
+        }
+        catch( InstantiationException ex )
+        {
             throw new PlayQiException( "Unable to instanciate " + appAssClassName + ": " + ex.getMessage(), ex );
-        } catch ( IllegalAccessException ex ) {
+        }
+        catch( IllegalAccessException ex )
+        {
             throw new PlayQiException( "Unable to instanciate " + appAssClassName + ": " + ex.getMessage(), ex );
-        } catch ( AssemblyException ex ) {
+        }
+        catch( AssemblyException ex )
+        {
             throw new PlayQiException( "Unable to assemble Qi4j Application: " + ex.getMessage(), ex );
-        } catch ( Exception ex ) {
+        }
+        catch( Exception ex )
+        {
             throw new PlayQiException( "Unable to activate Qi4j Application: " + ex.getMessage(), ex );
-        } finally {
+        }
+        finally
+        {
             Thread.currentThread().setContextClassLoader( originalClassloader );
         }
     }
 
-    private void eventuallyInjectStatic( Class clazz, String injectLayer, String injectModule )
+    private void eventuallyInjectStatic( Class clazz, String controllersLayerName, String controllersModuleName )
     {
         // QUID What about Scala support?
-        Layer layer = application.findLayer( injectLayer );
-        Module module = application.findModule( injectLayer, injectModule );
-        try {
-            for ( Field field : clazz.getDeclaredFields() ) {
-                if ( Modifier.isStatic( field.getModifiers() ) ) {
-                    if ( field.isAnnotationPresent( Structure.class ) ) {
-
-                        if ( field.getType().isAssignableFrom( Qi4jSPI.class )
-                             || field.getType().isAssignableFrom( Qi4j.class ) ) {
-
+        Layer controllersLayer = application.findLayer( controllersLayerName );
+        Module controllersModule = application.findModule( controllersLayerName, controllersModuleName );
+        try
+        {
+            for( Field field : clazz.getDeclaredFields() )
+            {
+                if( Modifier.isStatic( field.getModifiers() ) )
+                {
+                    if( field.isAnnotationPresent( Structure.class ) )
+                    {
+                        if( field.getType().isAssignableFrom( Qi4jSPI.class )
+                            || field.getType().isAssignableFrom( Qi4j.class ) )
+                        {
                             inject( field, qi4j );
-
-                        } else if ( field.getType().isAssignableFrom( Application.class ) ) {
-
-                            inject( field, application );
-
-                        } else if ( field.getType().isAssignableFrom( Layer.class ) ) {
-
-                            inject( field, layer );
-
-                        } else if ( field.getType().isAssignableFrom( Module.class )
-                                    || field.getType().isAssignableFrom( TransientBuilderFactory.class )
-                                    || field.getType().isAssignableFrom( UnitOfWorkFactory.class )
-                                    || field.getType().isAssignableFrom( ServiceFinder.class ) ) {
-
-                            inject( field, module );
-
                         }
-
-                    } else if ( field.isAnnotationPresent( Service.class ) ) {
-
-                        if ( field.getType().isAssignableFrom( Iterable.class ) ) {
-
-                            inject( field, module.findServices( field.getType() ) );
-
-                        } else if ( field.getType().isAssignableFrom( ServiceReference.class ) ) {
-
-                            inject( field, module.findService( field.getType() ) );
-
-                        } else {
-
-                            inject( field, module.findService( field.getType() ).get() );
-
+                        else
+                        {
+                            if( field.getType().isAssignableFrom( Application.class ) )
+                            {
+                                inject( field, application );
+                            }
+                            else
+                            {
+                                if( field.getType().isAssignableFrom( Layer.class ) )
+                                {
+                                    inject( field, controllersLayer );
+                                }
+                                else
+                                {
+                                    if( field.getType().isAssignableFrom( Module.class )
+                                        || field.getType().isAssignableFrom( TransientBuilderFactory.class )
+                                        || field.getType().isAssignableFrom( UnitOfWorkFactory.class )
+                                        || field.getType().isAssignableFrom( ServiceFinder.class ) )
+                                    {
+                                        inject( field, controllersModule );
+                                    }
+                                }
+                            }
                         }
-
+                    }
+                    else
+                    {
+                        if( field.isAnnotationPresent( Service.class ) )
+                        {
+                            if( field.getType().isAssignableFrom( Iterable.class ) )
+                            {
+                                inject( field, controllersModule.findServices( field.getType() ) );
+                            }
+                            else
+                            {
+                                if( field.getType().isAssignableFrom( ServiceReference.class ) )
+                                {
+                                    inject( field, controllersModule.findService( field.getType() ) );
+                                }
+                                else
+                                {
+                                    inject( field, controllersModule.findService( field.getType() ).get() );
+                                }
+                            }
+                        }
                     }
                 }
             }
-        } catch ( Exception ex ) {
-            throw new PlayQiException( "Unable to inject from '" + injectLayer + "/" + injectModule
+        }
+        catch( Exception ex )
+        {
+            throw new PlayQiException( "Unable to inject from '" + controllersLayerName + "/" + controllersModuleName
                                        + "' to '" + clazz.getName() + "': " + ex.getMessage(), ex );
         }
     }
@@ -248,19 +293,27 @@ public class PlayQiPlugin
     public void onStop()
     {
         super.onStop();
-        if ( envisageInstance != null ) {
+        if( envisageInstance != null )
+        {
             envisageInstance.stop();
         }
-        if ( entityViewerInstance != null ) {
+        if( entityViewerInstance != null )
+        {
             entityViewerInstance.stop();
         }
-        try {
-            if ( application != null ) {
+        try
+        {
+            if( application != null )
+            {
                 application.passivate();
             }
-        } catch ( Exception ex ) {
+        }
+        catch( Exception ex )
+        {
             play.Logger.warn( "An exception occured during Qi4j Application passivation: " + ex.getMessage(), ex );
-        } finally {
+        }
+        finally
+        {
             application = null;
             qi4j = null;
         }
