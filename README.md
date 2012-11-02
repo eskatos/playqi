@@ -105,7 +105,7 @@ See this tutorial on [how to assemble a more complete Qi4j application]
 (http://qi4j.org/howto-assemble-application.html).
 
 
-## Integrations and usage
+## Integrations
 
 
 ### Application Lifecycle and Modes
