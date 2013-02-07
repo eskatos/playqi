@@ -1,6 +1,6 @@
 # PlayQi - a Play! 2 Qi4j Plugin
 
-This plugin ties a Qi4j Application to a Play! 2 Application providing a tight
+This plugin ties a Qi4j Application to a Play! >=2.1 Application providing a tight
 integration between the two.
 
 ## What is Play!?
@@ -187,7 +187,7 @@ __Limitations__: @Tagged services are not supported yet.
 
 ### Qi4j Controllers
 
-Play 2.1 will bring the possibility to use non-static Java controllers. This plugin allow
+Play 2.1 bring the possibility to use non-static Java controllers. This plugin allow
 you to manage your controllers inside your Qi4j application.
 
 This is available using ````PlayQiSingle```` and ````PlayQi````, see above.
