@@ -29,7 +29,7 @@ Discussion
 
 ## What is Qi4j?
 
-![](http://qi4j.org/images/logo-standard.png "Qi4j")
+![](http://qi4j.org/graphics/Qi4j-Logo-64x64.png "Qi4j")
 
 > The short answer is that Qi4j is a framework for domain centric application
 > development, including evolved concepts from AOP, DI and DDD.
@@ -75,7 +75,7 @@ Qi4j is pronounced "chee for jay", so PlayQi is pronouced "play chee".
 ### Installation
 
 * Add ````https://oss.sonatype.org/content/repositories/snapshots/```` and ````https://repository-qi4j.forge.cloudbees.com/snapshot/```` repositories as resolvers to your ````project/Build.scala```` ;
-* add ````"org.codeartisans" %% "playqi" % "1.0-SNAPSHOT"```` and ````"org.qi4j.core" %% "org.qi4j.core.runtime" % "2.0-RC1"```` to your dependencies in ````project/Build.scala```` ;
+* add ````"org.codeartisans" %% "playqi" % "1.0"```` and ````"org.qi4j.core" %% "org.qi4j.core.runtime" % "2.0"```` to your dependencies in ````project/Build.scala```` ;
 * add ````1500:org.codeartisans.playqi.PlayQiPlugin```` to your  ````conf/play.plugins````.
 
 

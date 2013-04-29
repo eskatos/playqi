@@ -41,7 +41,7 @@
 
     <properties>
         <version.play2>2.1.0</version.play2>
-        <version.qi4j>2.0-RC1</version.qi4j>
+        <version.qi4j>2.0</version.qi4j>
     </properties>
 
     <dependencies>
