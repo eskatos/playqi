@@ -52,7 +52,7 @@ Questions & Answers
 (http://stackoverflow.com/questions/tagged/qi4j)
 
 Discussion  
-[http://qi4j.org/community/get_help.html](http://qi4j.org/community/get_help.html)
+[http://groups.google.com/group/qi4j-dev](http://groups.google.com/group/qi4j-dev)
 
 As Qi4j itself is written in the Java language, this Play plugin is too.
 Sample code you'll find below is __Java__ code but most of this works in Play
