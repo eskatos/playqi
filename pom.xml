@@ -76,9 +76,9 @@
     </dependencies>
 
     <scm>
-        <url>scm:git:git@github.com:eskatos/play2-qi4j.git</url>
-        <connection>scm:git:git@github.com:eskatos/play2-qi4j.git</connection>
-        <developerConnection>scm:git:git@github.com:eskatos/play2-qi4j.git</developerConnection>
+        <url>scm:git:git@github.com:eskatos/playqi.git</url>
+        <connection>scm:git:git@github.com:eskatos/playqi.git</connection>
+        <developerConnection>scm:git:git@github.com:eskatos/playqi.git</developerConnection>
     </scm>
 
     <licenses>
