@@ -52,7 +52,7 @@ Questions & Answers
 (http://stackoverflow.com/questions/tagged/qi4j)
 
 Discussion  
-[http://qi4j.org/help.html](http://qi4j.org/help.html)
+[http://qi4j.org/community/get_help.html](http://qi4j.org/community/get_help.html)
 
 As Qi4j itself is written in the Java language, this Play plugin is too.
 Sample code you'll find below is __Java__ code but most of this works in Play
@@ -60,9 +60,9 @@ __Scala__ applications.
 
 You can use Qi4j for a small part of your application where Composite Oriented
 Programming fits or go for a bigger DDD stack using Qi4j
-[Libraries](http://qi4j.org/libraries.html) and
-[Extensions](http://qi4j.org/extensions.html). In development mode the Qi4j
-[Tools](http://qi4j.org/tools.html) can come in handy.
+[Libraries](http://qi4j.org/latest/libraries.html) and
+[Extensions](http://qi4j.org/latest/extensions.html). In development mode the Qi4j
+[Tools](http://qi4j.org/latest/tools.html) can come in handy.
 
 
 ## How is "PlayQi" pronounced?
@@ -100,7 +100,7 @@ As a quick start and for a simple Qi4j application you can extend SingletonAssem
 and use ````qi4j.app-assembler=bootstrap.MyAppAssembler````.
 
 See this tutorial on [how to assemble a more complete Qi4j application]
-(http://qi4j.org/howto-assemble-application.html).
+(http://qi4j.org/latest/howto-assemble-application.html).
 
 
 ## Integrations
