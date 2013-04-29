@@ -30,7 +30,7 @@
       <section>
         <h1>PlayQi - a Play! 2 Qi4j Plugin</h1>
 
-<p>This plugin ties a Qi4j Application to a Play! 2 Application providing a tight
+<p>This plugin ties a Qi4j Application to a Play! &gt;=2.1 Application providing a tight
 integration between the two.</p>
 
 <h2>What is Play!?</h2>
@@ -55,7 +55,7 @@ Iteratee IO.</p>
 
 <h2>What is Qi4j?</h2>
 
-<p><img src="http://qi4j.org/images/logo-standard.png" alt="" title="Qi4j"></p>
+<p><img src="http://qi4j.org/graphics/Qi4j-Logo-64x64.png" alt="" title="Qi4j"></p>
 
 <blockquote>
 <p>The short answer is that Qi4j is a framework for domain centric application
@@ -98,11 +98,9 @@ Programming fits or go for a bigger DDD stack using Qi4j
 
 <ul>
 <li>Add <code>https://oss.sonatype.org/content/repositories/snapshots/</code> and <code>https://repository-qi4j.forge.cloudbees.com/snapshot/</code> repositories as resolvers to your <code>project/Build.scala</code> ;</li>
-<li>add <code>"org.codeartisans" %% "playqi" % "1.0-SNAPSHOT"</code> and <code>"org.qi4j.core" %% "org.qi4j.core.runtime" % "2.0-SNAPSHOT"</code> to your dependencies in <code>project/Build.scala</code> ;</li>
+<li>add <code>"org.codeartisans" %% "playqi" % "1.0"</code> and <code>"org.qi4j.core" %% "org.qi4j.core.runtime" % "2.0"</code> to your dependencies in <code>project/Build.scala</code> ;</li>
 <li>add <code>1500:org.codeartisans.playqi.PlayQiPlugin</code> to your  <code>conf/play.plugins</code>.</li>
-</ul><p>This plugin works with SNAPSHOTs of the upcoming 2.0 Qi4j release and so is a SNAPSHOT too.</p>
-
-<h3>Application Assembly</h3>
+</ul><h3>Application Assembly</h3>
 
 <p>The plugin request that you set the <code>qi4j.app-assembler</code> parameter in <code>conf/application.conf</code>. </p>
 
@@ -216,7 +214,7 @@ column separated list of package names.</p>
 
 <h3>Qi4j Controllers</h3>
 
-<p>Play 2.1 will bring the possibility to use non-static Java controllers. This plugin allow
+<p>Play 2.1 bring the possibility to use non-static Java controllers. This plugin allow
 you to manage your controllers inside your Qi4j application.</p>
 
 <p>This is available using <code>PlayQiSingle</code> and <code>PlayQi</code>, see above.</p>
@@ -344,12 +342,12 @@ public class MyController {
 <h4>Envisage</h4>
 
 <p>By setting <code>qi4j.envisable=enabled</code> in your <code>application.conf</code>
-the <a href="http://qi4j.org/tools-envisage.html">Envisage Qi4j Tool</a>
+the <a href="http://qi4j.org/latest/tools-envisage.html">Envisage Qi4j Tool</a>
 is started/reloaded/stopped alongside your application.</p>
 
-<p><img src="http://qi4j.org/images/tools-envisage-type.png" alt="" title="Type View"></p>
+<p><img src="http://qi4j.org/latest/images/tools-envisage-type.png" alt="" title="Type View"></p>
 
-<p><img src="http://qi4j.org/images/tools-envisage-stacked.png" alt="" title="Stacked View"></p>
+<p><img src="http://qi4j.org/latest/images/tools-envisage-stacked.png" alt="" title="Stacked View"></p>
 
 <p>Envisage is a Swing based visualization tool for the Qi4j Application model,
 it allows you to browse your Application Assembly. Visualizations can be printed to PDFs.</p>
@@ -357,10 +355,10 @@ it allows you to browse your Application Assembly. Visualizations can be printed
 <h4>EntityViewer</h4>
 
 <p>By setting <code>qi4j.entity-viewer=enabled</code> in your <code>application.conf</code>
-the <a href="http://qi4j.org/images/tools-envisage-stacked.png">Entity Viewer Qi4j Tool</a>
+the <a href="http://qi4j.org/latest/tools-entity-viewer.html">Entity Viewer Qi4j Tool</a>
 is started/reloaded/stopped alongside your application.</p>
 
-<p><img src="http://qi4j.org/images/tools-entity-viewer.png" alt="" title="EntityViewer"></p>
+<p><img src="http://qi4j.org/latest/images/tools-entity-viewer.png" alt="" title="EntityViewer"></p>
 
 <p>EntityViewer is a Swing based Entities browser. It allows you to browse Entities
 persisted in EntityStores.</p>
