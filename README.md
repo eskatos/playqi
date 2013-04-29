@@ -309,12 +309,12 @@ Theses tools work in DEV mode only. Their configuration is ignored in TEST and P
 #### Envisage
 
 By setting ````qi4j.envisable=enabled```` in your ````application.conf````
-the [Envisage Qi4j Tool](http://qi4j.org/tools-envisage.html)
+the [Envisage Qi4j Tool](http://qi4j.org/latest/tools-envisage.html)
 is started/reloaded/stopped alongside your application.
 
-![](http://qi4j.org/images/tools-envisage-type.png "Type View")
+![](http://qi4j.org/latest/images/tools-envisage-type.png "Type View")
 
-![](http://qi4j.org/images/tools-envisage-stacked.png "Stacked View")
+![](http://qi4j.org/latest/images/tools-envisage-stacked.png "Stacked View")
 
 Envisage is a Swing based visualization tool for the Qi4j Application model,
 it allows you to browse your Application Assembly. Visualizations can be printed to PDFs.
@@ -323,10 +323,10 @@ it allows you to browse your Application Assembly. Visualizations can be printed
 #### EntityViewer
 
 By setting ````qi4j.entity-viewer=enabled```` in your ````application.conf````
-the [Entity Viewer Qi4j Tool](http://qi4j.org/images/tools-envisage-stacked.png)
+the [Entity Viewer Qi4j Tool](http://qi4j.org/latest/tools-entity-viewer.html)
 is started/reloaded/stopped alongside your application.
 
-![](http://qi4j.org/images/tools-entity-viewer.png "EntityViewer")
+![](http://qi4j.org/latest/images/tools-entity-viewer.png "EntityViewer")
 
 EntityViewer is a Swing based Entities browser. It allows you to browse Entities
 persisted in EntityStores.
