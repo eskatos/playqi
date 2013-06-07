@@ -19,18 +19,18 @@ package org.codeartisans.playqi;
 
 import org.qi4j.api.structure.Module;
 import org.qi4j.api.unitofwork.UnitOfWork;
-import org.qi4j.api.unitofwork.UnitOfWorkCompletionException;
 import play.mvc.Action;
 import play.mvc.Http;
 import play.mvc.Result;
 
+@Deprecated
 public class PlayQiUnitOfWorkAction
-        extends Action<PlayQiUnitOfWorkConcern>
+    extends Action<PlayQiUnitOfWorkConcern>
 {
 
     @Override
     public Result call( Http.Context context )
-            throws Throwable
+        throws Throwable
     {
         Module module = PlayQi.module( configuration.layer(), configuration.module() );
         UnitOfWork uow = module.newUnitOfWork();
@@ -39,10 +39,6 @@ public class PlayQiUnitOfWorkAction
             Result result = delegate.call( context );
             uow.complete();
             return result;
-        }
-        catch( UnitOfWorkCompletionException ex )
-        {
-            throw ex;
         }
         catch( Throwable ex )
         {
@@ -53,5 +49,4 @@ public class PlayQiUnitOfWorkAction
             throw ex;
         }
     }
-
 }

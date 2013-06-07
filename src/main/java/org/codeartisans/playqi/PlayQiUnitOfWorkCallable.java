@@ -20,10 +20,10 @@ package org.codeartisans.playqi;
 import java.util.concurrent.Callable;
 import org.qi4j.api.structure.Module;
 import org.qi4j.api.unitofwork.UnitOfWork;
-import org.qi4j.api.unitofwork.UnitOfWorkCompletionException;
 
+@Deprecated
 public class PlayQiUnitOfWorkCallable<T>
-        implements Callable<T>
+    implements Callable<T>
 {
 
     private final String layerName;
@@ -39,7 +39,7 @@ public class PlayQiUnitOfWorkCallable<T>
 
     @Override
     public final T call()
-            throws Exception
+        throws Exception
     {
         Module module = PlayQi.module( layerName, moduleName );
         UnitOfWork uow = module.newUnitOfWork();
@@ -48,10 +48,6 @@ public class PlayQiUnitOfWorkCallable<T>
             T result = delegate.call();
             uow.complete();
             return result;
-        }
-        catch( UnitOfWorkCompletionException ex )
-        {
-            throw ex;
         }
         catch( Exception ex )
         {
@@ -62,5 +58,4 @@ public class PlayQiUnitOfWorkCallable<T>
             throw ex;
         }
     }
-
 }
