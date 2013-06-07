@@ -4,36 +4,48 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>PlayQi by eskatos</title>
-
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
     <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
   </head>
   <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/eskatos/playqi">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/eskatos/playqi/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/eskatos/playqi/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
     <div class="wrapper">
-      <header>
-        <h1>PlayQi</h1>
-        <p>Play! 2 Qi4j Plugin</p>
 
-        <p class="view"><a href="https://github.com/eskatos/playqi">View the Project on GitHub <small>eskatos/playqi</small></a></p>
-
-
-        <ul>
-          <li><a href="https://github.com/eskatos/playqi/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/eskatos/playqi/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/eskatos/playqi">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
       <section>
-        <h1>PlayQi - a Play! 2 Qi4j Plugin</h1>
+        <div id="title">
+          <h1>PlayQi</h1>
+          <p>Play! 2 Qi4j Plugin</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/eskatos">eskatos</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>
+<a name="playqi---a-play-2-qi4j-plugin" class="anchor" href="#playqi---a-play-2-qi4j-plugin"><span class="octicon octicon-link"></span></a>PlayQi - a Play! 2 Qi4j Plugin</h1>
 
 <p>This plugin ties a Qi4j Application to a Play! &gt;=2.1 Application providing a tight
 integration between the two.</p>
 
-<h2>What is Play!?</h2>
+<h2>
+<a name="what-is-play" class="anchor" href="#what-is-play"><span class="octicon octicon-link"></span></a>What is Play!?</h2>
 
 <p><img src="http://www.playframework.org/assets/images/logo.png" alt="" title="Play!"></p>
 
@@ -53,7 +65,8 @@ Iteratee IO.</p>
 
 <p>Discussion<br><a href="http://groups.google.com/group/play-framework">http://groups.google.com/group/play-framework</a></p>
 
-<h2>What is Qi4j?</h2>
+<h2>
+<a name="what-is-qi4j" class="anchor" href="#what-is-qi4j"><span class="octicon octicon-link"></span></a>What is Qi4j?</h2>
 
 <p><img src="http://qi4j.org/graphics/Qi4j-Logo-64x64.png" alt="" title="Qi4j"></p>
 
@@ -76,7 +89,7 @@ plethora of languages running on the JVM as bridged languages.</p>
 
 <p>Questions &amp; Answers<br><a href="http://stackoverflow.com/questions/tagged/qi4j">http://stackoverflow.com/questions/tagged/qi4j</a></p>
 
-<p>Discussion<br><a href="http://qi4j.org/help.html">http://qi4j.org/help.html</a></p>
+<p>Discussion<br><a href="http://groups.google.com/group/qi4j-dev">http://groups.google.com/group/qi4j-dev</a></p>
 
 <p>As Qi4j itself is written in the Java language, this Play plugin is too.
 Sample code you'll find below is <strong>Java</strong> code but most of this works in Play
@@ -84,23 +97,27 @@ Sample code you'll find below is <strong>Java</strong> code but most of this wor
 
 <p>You can use Qi4j for a small part of your application where Composite Oriented
 Programming fits or go for a bigger DDD stack using Qi4j
-<a href="http://qi4j.org/libraries.html">Libraries</a> and
-<a href="http://qi4j.org/extensions.html">Extensions</a>. In development mode the Qi4j
-<a href="http://qi4j.org/tools.html">Tools</a> can come in handy.</p>
+<a href="http://qi4j.org/latest/libraries.html">Libraries</a> and
+<a href="http://qi4j.org/latest/extensions.html">Extensions</a>. In development mode the Qi4j
+<a href="http://qi4j.org/latest/tools.html">Tools</a> can come in handy.</p>
 
-<h2>How is "PlayQi" pronounced?</h2>
+<h2>
+<a name="how-is-playqi-pronounced" class="anchor" href="#how-is-playqi-pronounced"><span class="octicon octicon-link"></span></a>How is "PlayQi" pronounced?</h2>
 
 <p>Qi4j is pronounced "chee for jay", so PlayQi is pronouced "play chee".</p>
 
-<h2>Usage</h2>
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
 
-<h3>Installation</h3>
+<h3>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h3>
 
 <ul>
 <li>Add <code>https://oss.sonatype.org/content/repositories/snapshots/</code> and <code>https://repository-qi4j.forge.cloudbees.com/snapshot/</code> repositories as resolvers to your <code>project/Build.scala</code> ;</li>
-<li>add <code>"org.codeartisans" %% "playqi" % "1.0"</code> and <code>"org.qi4j.core" %% "org.qi4j.core.runtime" % "2.0"</code> to your dependencies in <code>project/Build.scala</code> ;</li>
+<li>add <code>"org.codeartisans" %% "playqi" % "1.1"</code> and <code>"org.qi4j.core" %% "org.qi4j.core.runtime" % "2.0"</code> to your dependencies in <code>project/Build.scala</code> ;</li>
 <li>add <code>1500:org.codeartisans.playqi.PlayQiPlugin</code> to your  <code>conf/play.plugins</code>.</li>
-</ul><h3>Application Assembly</h3>
+</ul><h3>
+<a name="application-assembly" class="anchor" href="#application-assembly"><span class="octicon octicon-link"></span></a>Application Assembly</h3>
 
 <p>The plugin request that you set the <code>qi4j.app-assembler</code> parameter in <code>conf/application.conf</code>. </p>
 
@@ -121,18 +138,21 @@ Programming fits or go for a bigger DDD stack using Qi4j
 
 <p>and use <code>qi4j.app-assembler=bootstrap.MyAppAssembler</code>.</p>
 
-<p>See this tutorial on <a href="http://qi4j.org/howto-assemble-application.html">how to assemble a more complete Qi4j application</a>.</p>
+<p>See this tutorial on <a href="http://qi4j.org/latest/howto-assemble-application.html">how to assemble a more complete Qi4j application</a>.</p>
 
-<h2>Integrations</h2>
+<h2>
+<a name="integrations" class="anchor" href="#integrations"><span class="octicon octicon-link"></span></a>Integrations</h2>
 
-<h3>Application Lifecycle and Modes</h3>
+<h3>
+<a name="application-lifecycle-and-modes" class="anchor" href="#application-lifecycle-and-modes"><span class="octicon octicon-link"></span></a>Application Lifecycle and Modes</h3>
 
 <p>Play and Qi4j Applications are <strong>started</strong> / <strong>activated</strong> and <strong>passivated</strong>
 / <strong>stopped</strong> together.</p>
 
 <p>Moreover, Play <strong>DEV</strong> / <strong>TEST</strong> / <strong>PROD</strong> modes and Qi4j <strong>development</strong> / <strong>test</strong> / <strong>production</strong> modes are synched.</p>
 
-<h3>Plugin API</h3>
+<h3>
+<a name="plugin-api" class="anchor" href="#plugin-api"><span class="octicon octicon-link"></span></a>Plugin API</h3>
 
 <p>Depending on your Qi4j Application assembly you can use two APIs:</p>
 
@@ -179,7 +199,8 @@ Module module = PlayQi.module( "Presentation", "Contexts" );
 Blog blog = PlayQi.service( "Presentation", "Contexts", Blog.class );
 </code></pre>
 
-<h3>Controllers injection</h3>
+<h3>
+<a name="controllers-injection" class="anchor" href="#controllers-injection"><span class="octicon octicon-link"></span></a>Controllers injection</h3>
 
 <p>Qi4j Structure and Service injections scopes are supported in controllers.</p>
 
@@ -212,7 +233,8 @@ column separated list of package names.</p>
 
 <p><strong>Limitations</strong>: <a href="https://github.com/Tagged" class="user-mention">@Tagged</a> services are not supported yet.</p>
 
-<h3>Qi4j Controllers</h3>
+<h3>
+<a name="qi4j-controllers" class="anchor" href="#qi4j-controllers"><span class="octicon octicon-link"></span></a>Qi4j Controllers</h3>
 
 <p>Play 2.1 bring the possibility to use non-static Java controllers. This plugin allow
 you to manage your controllers inside your Qi4j application.</p>
@@ -290,7 +312,8 @@ public class MyControllerMixin {
 }
 </code></pre>
 
-<h3>Compose Play Actions with Qi4j UnitOfWorks</h3>
+<h3>
+<a name="compose-play-actions-with-qi4j-unitofworks" class="anchor" href="#compose-play-actions-with-qi4j-unitofworks"><span class="octicon octicon-link"></span></a>Compose Play Actions with Qi4j UnitOfWorks</h3>
 
 <p>This plugin provides the annotations and to wrap Qi4j UnitsOfWork around Play Actions and Callable&lt;?&gt; wrappers for you to go async.</p>
 
@@ -335,11 +358,13 @@ public class MyController {
 
 <p>If you go async, you can use either the <code>ControllersModuleUnitOfWorkCallable</code> or the <code>PlayQiUnitOfWorkCallable</code> to wrap a UoW around another Callable.</p>
 
-<h3>Qi4j Development Tools</h3>
+<h3>
+<a name="qi4j-development-tools" class="anchor" href="#qi4j-development-tools"><span class="octicon octicon-link"></span></a>Qi4j Development Tools</h3>
 
 <p>Theses tools work in DEV mode only. Their configuration is ignored in TEST and PROD modes.</p>
 
-<h4>Envisage</h4>
+<h4>
+<a name="envisage" class="anchor" href="#envisage"><span class="octicon octicon-link"></span></a>Envisage</h4>
 
 <p>By setting <code>qi4j.envisable=enabled</code> in your <code>application.conf</code>
 the <a href="http://qi4j.org/latest/tools-envisage.html">Envisage Qi4j Tool</a>
@@ -352,7 +377,8 @@ is started/reloaded/stopped alongside your application.</p>
 <p>Envisage is a Swing based visualization tool for the Qi4j Application model,
 it allows you to browse your Application Assembly. Visualizations can be printed to PDFs.</p>
 
-<h4>EntityViewer</h4>
+<h4>
+<a name="entityviewer" class="anchor" href="#entityviewer"><span class="octicon octicon-link"></span></a>EntityViewer</h4>
 
 <p>By setting <code>qi4j.entity-viewer=enabled</code> in your <code>application.conf</code>
 the <a href="http://qi4j.org/latest/tools-entity-viewer.html">Entity Viewer Qi4j Tool</a>
@@ -366,7 +392,8 @@ persisted in EntityStores.</p>
 <p>Note that to use the EntityViewer your Qi4j Application Assembly must contains both
 EntityStore and Index/Query services.</p>
 
-<h2>Licence</h2>
+<h2>
+<a name="licence" class="anchor" href="#licence"><span class="octicon octicon-link"></span></a>Licence</h2>
 
 <p>This software is licensed under the Apache 2 license, quoted below.</p>
 
@@ -381,12 +408,9 @@ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.</p>
       </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/eskatos">eskatos</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
+
     </div>
-    <script src="javascripts/scale.fix.js"></script>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
               <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
