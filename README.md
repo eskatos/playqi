@@ -75,7 +75,7 @@ Qi4j is pronounced "chee for jay", so PlayQi is pronouced "play chee".
 ### Installation
 
 * Add ````https://oss.sonatype.org/content/repositories/snapshots/```` and ````https://repository-qi4j.forge.cloudbees.com/snapshot/```` repositories as resolvers to your ````project/Build.scala```` ;
-* add ````"org.codeartisans" %% "playqi" % "1.0"```` and ````"org.qi4j.core" %% "org.qi4j.core.runtime" % "2.0"```` to your dependencies in ````project/Build.scala```` ;
+* add ````"org.codeartisans" %% "playqi" % "1.1"```` and ````"org.qi4j.core" %% "org.qi4j.core.runtime" % "2.0"```` to your dependencies in ````project/Build.scala```` ;
 * add ````1500:org.codeartisans.playqi.PlayQiPlugin```` to your  ````conf/play.plugins````.
 
 
