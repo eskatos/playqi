@@ -308,7 +308,7 @@ Theses tools work in DEV mode only. Their configuration is ignored in TEST and P
 
 #### Envisage
 
-By setting ````qi4j.envisable=enabled```` in your ````application.conf````
+By setting ````qi4j.envisage=enabled```` in your ````application.conf````
 the [Envisage Qi4j Tool](http://qi4j.org/latest/tools-envisage.html)
 is started/reloaded/stopped alongside your application.
 
